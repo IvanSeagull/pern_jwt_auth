@@ -2,7 +2,7 @@ const pool = require('../db');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const { SECRET_JWT } = require('../config');
 
 const generateAccessToken = (id, role) => {
   const payload = {
@@ -10,7 +10,7 @@ const generateAccessToken = (id, role) => {
     role,
   };
 
-  return jwt.sign(payload, process.env.SECRET_JWT, { expiresIn: '24h' });
+  return jwt.sign(payload, SECRET_JWT, { expiresIn: '24h' });
 };
 
 class authController {

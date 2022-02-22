@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const { SECRET_JWT } = require('../config');
 
 module.exports = function (req, res, next) {
   if (req.method === 'OPTIONS') next();
@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) return res.status(403).json({ msg: 'Unauthorized user' });
 
-    const decodedData = jwt.verify(token, process.env.SECRET_JWT);
+    const decodedData = jwt.verify(token, SECRET_JWT);
 
     req.user = decodedData;
     next();
